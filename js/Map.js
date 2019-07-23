@@ -2,11 +2,21 @@ class Map {
     constructor(edge_size) {
         this.edge_size = edge_size;
         this.grid_size = edge_size*edge_size;
-
-        this.nb_signification = [];
-
+        this.grid_nb_signification = [];
         this.grid = Array(this.grid_size).fill(0);
+        this.designer = null;
+
+        this.sizes = {
+            width: this.edge_size * Tile.size[0],
+            height: this.edge_size * Tile.size[1]
+        }
+        
         this.setLevel();
+    }
+
+    setSettings(game) {
+        this.game = game;
+        this.designer = game.designer;
         this.convertToTile(this.grid);
     }
 
@@ -27,7 +37,7 @@ class Map {
     }
 
     addObjectDestigner(obj) {
-        designer.addDrawable(designer.bg_array, obj);
+        this.designer.addDrawable(this.designer.bg_array, obj);
     }
 
     convertToTile(array) {
@@ -35,9 +45,9 @@ class Map {
             if (array[i] == 0){
                 continue;
             }
-            
-            let x = (i % this.edge_size) * Tile.size[0];
-            let y = Math.floor(i/ this.edge_size) * Tile.size[1];
+
+            let x = (i % this.edge_size) * Tile.size[0] + 10;
+            let y = Math.floor(i/ this.edge_size) * Tile.size[1] + 10;
             
             let tile = new Tile(x, y);
             this.addObjectDestigner(tile);

@@ -7,7 +7,7 @@ class Tile {
     }
 
     static get size() {
-        const value = game.bg_canvas.height/8;
+        const value = 100;
         return [value, value];
     }
 }
