@@ -14,7 +14,7 @@ The map is moving only when the player is to close of the edge of the canvas. Th
 
 ## Player
 
-By pressing ZQSD, the player move around the map freely without collision detection for the moment.
+By pressing ZQSD, the player move around the map. He can't go outside the map.
 
 ## General
 

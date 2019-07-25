@@ -1,7 +1,7 @@
 class Designer {
     constructor() {
-        this.game = null;
-        this.map = null;
+        this.game = null; // Init in setSettings
+        this.map = null; // Init in setSettings
         this.bg_array = [];
         this.fg_array = [];
 
@@ -14,7 +14,7 @@ class Designer {
 
         this.zoom = {
             min: 200,
-            max: null
+            max: null // Init in setSettings
         }
         this.current_zoom = this.zoom.min;
     }

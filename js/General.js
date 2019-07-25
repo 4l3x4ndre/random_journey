@@ -2,41 +2,60 @@ class General {
     constructor() {
     }
 
-    mapTileUnder(obj) {
+    mapTileUnderCoord(x, y) {
         // return the position of the tile under the object according to the map grid array
-        return (Math.floor(obj.y/Tile.size)) * this.map.edge_size + Math.floor(obj.x/Tile.size);
+        return (Math.floor(y/Tile.size)) * this.map.edge_size + Math.floor(x/Tile.size);
     }
 
     movementPossibleWithMap(obj, speed, edge) {
-        let tile_id = this.mapTileUnder(obj);
-        const tile = this.map.grid[tile_id];
-        let research_tile = null;
         if (edge == "left") {
-            research_tile = this.tileOfId(tile_id-1);
-            return this.checkLeftMovement(tile, research_tile, obj, speed);
+            return this.checkLeftMovement(obj, speed);
         } else if (edge == "right") {
-            research_tile = this.tileOfId(tile_id+1);
-            return this.checkRightMovement(tile, research_tile, obj, speed);
+            return this.checkRightMovement(obj, speed);
         } else if (edge == "up") {
-            research_tile = this.tileOfId(tile_id-this.map.edge_size);
-            return this.checkUpMovement(tile, research_tile, obj, speed);
+            return this.checkUpMovement(obj, speed);
         } else if (edge == "down") {
-            research_tile = this.tileOfId(tile_id+this.map.edge_size);
-            
-            return this.checkDownMovement(tile, research_tile, obj, speed);
+            return this.checkDownMovement(obj, speed);
         }
     }
 
-    checkLeftMovement(tile, research_tile, obj, speed) {
+    checkLeftMovement(obj, speed) {
+        let tile_id = this.mapTileUnderCoord(obj.x, obj.y);
+        let tile = this.map.grid[tile_id];
+        let research_tile = this.tileOfId(tile_id-1);
+
         if ((research_tile == null && obj.x - speed < tile.x) || obj.x - speed < 0) {
             // There is nothing to the left of the tile where is the object
             // (no tile or the obj reach the edge of map)
             return false;
         }
+
+        tile_id = this.mapTileUnderCoord(obj.x, obj.y + obj.height);
+        tile = this.map.grid[tile_id];
+        research_tile = this.tileOfId(tile_id-1);
+
+        if ((research_tile == null && obj.x - speed < tile.x) || obj.x - speed < 0) {
+            // There is nothing to the left of the tile where is the object
+            // here it use the opposite edge to avoid glitch when the obj is between to tiles
+            return false;
+        }
         return true;
     }
 
-    checkRightMovement(tile, research_tile, obj, speed) {
+    checkRightMovement(obj, speed) {
+        let tile_id = this.mapTileUnderCoord(obj.x, obj.y);
+        let tile = this.map.grid[tile_id];
+        let research_tile = this.tileOfId(tile_id+1);
+
+        if ((research_tile == null && obj.x+obj.width+speed > tile.x+Tile.size)
+        || obj.x+obj.width+speed > this.map.edge_size*Tile.size) {
+            return false;
+        }
+
+        tile_id = this.mapTileUnderCoord(obj.x, obj.y + obj.height);
+        tile = this.map.grid[tile_id];
+        research_tile = this.tileOfId(tile_id+1);
+
         if ((research_tile == null && obj.x+obj.width+speed > tile.x+Tile.size)
         || obj.x+obj.width+speed > this.map.edge_size*Tile.size) {
             return false;
@@ -44,20 +63,46 @@ class General {
         return true;
     }
 
-    checkUpMovement(tile, research_tile, obj, speed) {
+    checkUpMovement(obj, speed) {
+        let tile_id = this.mapTileUnderCoord(obj.x, obj.y);
+        let tile = this.map.grid[tile_id];
+        let research_tile = this.tileOfId(tile_id-this.map.edge_size);
+
         if ((research_tile == null && obj.y - speed < tile.y) || obj.y - speed < 0) {
             return false;
         }
+
+        tile_id = this.mapTileUnderCoord(obj.x + obj.width, obj.y);
+        tile = this.map.grid[tile_id];
+        research_tile = this.tileOfId(tile_id-this.map.edge_size);
+
+        if ((research_tile == null && obj.y - speed < tile.y) || obj.y - speed < 0) {
+            return false;
+        }        
         return true;
     }
 
-    checkDownMovement(tile, research_tile, obj, speed) {
+    checkDownMovement(obj, speed) {
+        let tile_id = this.mapTileUnderCoord(obj.x, obj.y);
+        let tile = this.map.grid[tile_id];
+        let research_tile = this.tileOfId(tile_id+this.map.edge_size);
+
+        if ((research_tile == null && obj.y+obj.height+speed > tile.y + Tile.size)
+        || obj.y + obj.height + speed > this.map.edge_size*Tile.size) {
+            return false;
+        }
+
+        tile_id = this.mapTileUnderCoord(obj.x + obj.width, obj.y);
+        tile = this.map.grid[tile_id];
+        research_tile = this.tileOfId(tile_id+this.map.edge_size);
+
         if ((research_tile == null && obj.y+obj.height+speed > tile.y + Tile.size)
         || obj.y + obj.height + speed > this.map.edge_size*Tile.size) {
             return false;
         }
         return true;
     }
+
     tileOfId(id) {
         let tile = this.map.grid[id];
         if (tile == 0) {
