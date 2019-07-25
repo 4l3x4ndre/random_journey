@@ -22,7 +22,6 @@ class General {
             return this.checkUpMovement(tile, research_tile, obj, speed);
         } else if (edge == "down") {
             research_tile = this.tileOfId(tile_id+this.map.edge_size);
-            console.log(tile_id, tile_id+this.map.edge_size);
             
             return this.checkDownMovement(tile, research_tile, obj, speed);
         }
