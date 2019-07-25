@@ -46,13 +46,17 @@ class Map {
                 continue;
             }
 
-            // The "+ 10" allow me to identify tiles. It's provisional.
-            let x = (i % this.edge_size) * Tile.size + 10;
-            let y = Math.floor(i/ this.edge_size) * Tile.size + 10;
+            let x = (i % this.edge_size) * Tile.size;
+            let y = Math.floor(i/ this.edge_size) * Tile.size;
             
-            let tile = new Tile(x, y);
+            let tile = new Tile(x, y, i);
             this.addObjectDestigner(tile);
+            this.changeGrid(i, tile);
         }
+    }
+
+    changeGrid(id, tile) {
+        this.grid[id] = tile;
     }
 
     generation() {

@@ -4,7 +4,8 @@ class Player {
         this.y = y;
         this.width = Tile.size/5;
         this.height = Tile.size/5;     
-        this.color = "lightgreen";   
+        this.color = "lightgreen"; 
+        this.tile_id = -1;  
     }
 
     setSettings(game) {

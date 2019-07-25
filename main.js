@@ -11,10 +11,13 @@ const map = new Map(8);
 
 const player = new Player(50, 50);
 
-game.setSettings(inputs, designer, map, player);
+const general = new General(game);
+
+game.setSettings(inputs, designer, map, player, general);
 map.setSettings(game);
 player.setSettings(game);
 designer.setSettings(game);
+general.setSettings(game);
 
 designer.draw_bg();
 

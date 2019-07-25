@@ -15,3 +15,7 @@ The map is moving only when the player is to close of the edge of the canvas. Th
 ## Player
 
 By pressing ZQSD, the player move around the map freely without collision detection for the moment.
+
+## General
+
+A script called General contains all the functions that many entities need, like collisions, distance, etc.
