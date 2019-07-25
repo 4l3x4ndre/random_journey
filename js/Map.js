@@ -7,8 +7,8 @@ class Map {
         this.designer = null;
 
         this.sizes = {
-            width: this.edge_size * Tile.size[0],
-            height: this.edge_size * Tile.size[1]
+            width: this.edge_size * Tile.size,
+            height: this.edge_size * Tile.size
         }
         
         this.setLevel();
@@ -46,8 +46,9 @@ class Map {
                 continue;
             }
 
-            let x = (i % this.edge_size) * Tile.size[0] + 10;
-            let y = Math.floor(i/ this.edge_size) * Tile.size[1] + 10;
+            // The "+ 10" allow me to identify tiles. It's provisional.
+            let x = (i % this.edge_size) * Tile.size + 10;
+            let y = Math.floor(i/ this.edge_size) * Tile.size + 10;
             
             let tile = new Tile(x, y);
             this.addObjectDestigner(tile);

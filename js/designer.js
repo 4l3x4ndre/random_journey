@@ -3,6 +3,7 @@ class Designer {
         this.game = null;
         this.map = null;
         this.bg_array = [];
+        this.fg_array = [];
 
         this.vision_area = {
             x:0,
@@ -12,24 +13,21 @@ class Designer {
         }
 
         this.zoom = {
-            min: [100, 200],
-            normal: [200, 400],
-            max: [0, 0]
+            min: 200,
+            max: null
         }
-        this.zoom_array = [this.zoom.min, this.zoom.normal, this.zoom.max];
-        this.current_zoom_id = 1;
+        this.current_zoom = this.zoom.min;
     }
 
     setSettings(game) {
         this.game = game;
         this.map = game.map;
 
-        this.factor_width = this.game.bg_canvas.width/this.vision_area.width;
-        this.factor_height = this.game.bg_canvas.height/this.vision_area.height;
+        this.factor = this.game.bg_canvas.width/this.vision_area.width;
 
-        this.zoom.max = [this.map.edge_size * Tile.size[0], this.map.edge_size * Tile.size[1]];
+        this.zoom.max = this.map.edge_size * Tile.size;
         this.zoom_array = [this.zoom.min, this.zoom.normal, this.zoom.max];
-        this.setMapZoom(this.current_zoom_id);
+        this.setMapZoom(this.current_zoom);
     }    
 
     movement (amount_x, amount_y) {
@@ -45,58 +43,69 @@ class Designer {
 
     zoomingMap() {
         
-        if (this.current_zoom_id + 1 > this.zoom_array.length-1) {
-            this.current_zoom_id=0;
+        if (this.current_zoom == this.zoom.min) {
+            this.current_zoom = this.zoom.max;
         } else {
-            this.current_zoom_id += 1;
+            this.current_zoom = this.zoom.min;
         }
         this.setMapZoom();
     }
 
-    setMapZoom(custom_id = -1) {
-        let zoom_factor_width = 0;
-        let zoom_factor_height = 0;
-        if (custom_id != -1) {
-            zoom_factor_width = this.zoom_array[custom_id][0];
-            zoom_factor_height = this.zoom_array[custom_id][1];
-        } else {
-            zoom_factor_width = this.zoom_array[this.current_zoom_id][0];            
-            zoom_factor_height = this.zoom_array[this.current_zoom_id][1];
+    setMapZoom(custom_zoom = -1) {
+        if (custom_zoom != -1) {
+            this.current_zoom = custom_zoom;
         }
 
-        let diff_x = zoom_factor_width - this.vision_area.width;
-        let diff_y = zoom_factor_height - this.vision_area.height;
-
-        this.centerMapVision(zoom_factor_width, zoom_factor_height, diff_x, diff_y);
-        this.changeMapVisionSize(zoom_factor_width, zoom_factor_height);
+        this.changeMapVisionSize(this.current_zoom);
+        if (this.current_zoom != this.zoom.max) {
+            this.centerMapVision();
+        } else {
+            this.centerMapVision(0, 0);
+        }
+        this.draw_bg();
     }
 
-    centerMapVision(zoom_factor_width, zoom_factor_height, diff_x, diff_y) {
+    centerMapVision(custom_x = null, custom_y = null) {
+        if (custom_x != null && custom_y != null) {
+            this.vision_area.x = custom_x;
+            this.vision_area.y = custom_y;
+            return;
+        }
         // center the vision area horizontaly
-        if (diff_x < 0) {
-            diff_x = this.vision_area.width - zoom_factor_width;
-            this.vision_area.x += diff_x/2;
-        } else {
-            this.vision_area.x -= diff_x/2;
-        }
+        this.vision_area.x = this.game.player.x - this.vision_area.width/2;
         // center the vision area verticaly
-        if (diff_y < 0) {
-            diff_y = this.vision_area.height - zoom_factor_height;
-            this.vision_area.y += diff_y/2;
-        } else {
-            this.vision_area.y -= diff_y/2;
-        }
+        this.vision_area.y = this.game.player.y - this.vision_area.height/2;        
     }
 
-    changeMapVisionSize(zoom_factor_width, zoom_factor_height) {
-        this.vision_area.width = zoom_factor_width;
-        this.vision_area.height = zoom_factor_height;
+    changeMapVisionSize(zoom) {
+        this.vision_area.width = zoom;
+        this.vision_area.height = zoom;
 
-        this.factor_width = this.game.bg_canvas.width/this.vision_area.width;
-        this.factor_height = this.game.bg_canvas.height/this.vision_area.height;
+        this.factor = this.game.bg_canvas.width/this.vision_area.width;
     }
     
-    draw() {
+    draw(canvas, ctx, array) {
+        canvas.width = canvas.width;
+        for (var i in array) {
+            const element = array[i];
+            if (!this.isVisible(element)) {
+                continue;
+            }
+
+            ctx.beginPath();
+            ctx.fillStyle = element.color;
+            ctx.rect(
+                (element.x - this.vision_area.x) * this.factor,
+                (element.y - this.vision_area.y) * this.factor,
+                element.width * this.factor,
+                element.height * this.factor
+            );
+            ctx.fill();
+            ctx.closePath();
+        }
+    }
+
+    draw_bg() {
         this.game.bg_canvas.width = this.game.bg_canvas.width;
         for (var i in this.bg_array) {
             const element = this.bg_array[i];
@@ -105,15 +114,36 @@ class Designer {
             }
 
             this.game.bg_ctx.beginPath();
-            this.game.bg_ctx.fillStyle = "black";
+            this.game.bg_ctx.fillStyle = element.color;
             this.game.bg_ctx.rect(
-                (element.x - this.vision_area.x) * this.factor_width,
-                (element.y - this.vision_area.y) * this.factor_height,
-                element.width * this.factor_width,
-                element.height * this.factor_height
+                (element.x - this.vision_area.x) * this.factor,
+                (element.y - this.vision_area.y) * this.factor,
+                element.width * this.factor,
+                element.height * this.factor
             );
             this.game.bg_ctx.fill();
             this.game.bg_ctx.closePath();
+        }
+    }
+
+    draw_fg() {
+        this.game.fg_canvas.width = this.game.fg_canvas.width;
+        for (var i in this.fg_array) {
+            const element = this.fg_array[i];
+            if (!this.isVisible(element)) {
+                continue;
+            }
+
+            this.game.fg_ctx.beginPath();
+            this.game.fg_ctx.fillStyle = element.color;
+            this.game.fg_ctx.rect(
+                (element.x - this.vision_area.x) * this.factor,
+                (element.y - this.vision_area.y) * this.factor,
+                element.width * this.factor,
+                element.height * this.factor
+            );
+            this.game.fg_ctx.fill();
+            this.game.fg_ctx.closePath();
         }
     }
 

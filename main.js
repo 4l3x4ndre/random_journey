@@ -9,15 +9,20 @@ const designer = new Designer();
 
 const map = new Map(8);
 
-game.setSettings(inputs, designer, map);
-designer.setSettings(game);
+const player = new Player(50, 50);
+
+game.setSettings(inputs, designer, map, player);
 map.setSettings(game);
+player.setSettings(game);
+designer.setSettings(game);
+
+designer.draw_bg();
 
 requestAnimationFrame(loop);
 function loop() {
 
     game.movement();
-    designer.draw();
+    designer.draw(game.fg_canvas, game.fg_ctx, game.designer.fg_array);
 
     requestAnimationFrame(loop);
 }

@@ -2,12 +2,12 @@ class Tile {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = Tile.size[0];
-        this.height = Tile.size[1];
+        this.width = Tile.size;
+        this.height = Tile.size;
+        this.color = "black";
     }
 
     static get size() {
-        const value = 100;
-        return [value, value];
+        return 100;
     }
 }

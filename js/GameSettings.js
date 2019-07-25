@@ -15,6 +15,12 @@ class Game {
             run: 2
         };
         this.current_speed = this.speed.walk;
+
+        this.player = null;
+        this.player_blocking_sizes = {
+            width: this.fg_canvas.width/7,
+            height: this.fg_canvas.height/7,
+        }
     }
 
     movement() {
@@ -29,22 +35,48 @@ class Game {
             this.current_speed = this.speed.walk;
         }
 
+        let map_moving_x = true;
+        let map_moving_y = true;
+
+        this.player.canvasPosition();
+        
         if (this.inputs.up) {
-            this.designer.movement(0, -this.current_speed);
+            if (this.player.y < this.designer.vision_area.y + this.player_blocking_sizes.height) {
+                this.designer.movement(0, -this.current_speed);
+            }
+            this.player.movement(0, -this.current_speed);
         } else if (this.inputs.down) {
-            this.designer.movement(0, this.current_speed)
+            if (this.player.y > this.designer.vision_area.y+this.designer.vision_area.height-this.player_blocking_sizes.height) {
+                this.designer.movement(0, this.current_speed);
+            }
+            this.player.movement(0, this.current_speed);
+        } else {
+            map_moving_y = false;
         }
 
         if (this.inputs.left) {
-            this.designer.movement(-this.current_speed, 0);
+            if (this.player.x < this.designer.vision_area.x + this.player_blocking_sizes.width) {
+                this.designer.movement(-this.current_speed, 0);
+            }
+            this.player.movement(-this.current_speed, 0);
         } else if (this.inputs.right) {
-            this.designer.movement(this.current_speed, 0);
+            if (this.player.x > this.designer.vision_area.x+this.designer.vision_area.width-this.player_blocking_sizes.width) {
+                this.designer.movement(this.current_speed, 0);
+            }
+            this.player.movement(this.current_speed, 0);
+        } else {
+            map_moving_x = false;
+        }
+
+        if (map_moving_x || map_moving_y) {
+            designer.draw(this.bg_canvas, this.bg_ctx, this.designer.bg_array);
         }
     }
 
-    setSettings(inputs, designer, map) {
+    setSettings(inputs, designer, map, player) {
         this.inputs = inputs;
         this.designer = designer;
         this.map = map;
+        this.player = player;
     }
 }
