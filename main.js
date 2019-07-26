@@ -19,7 +19,8 @@ player.setSettings(game);
 designer.setSettings(game);
 general.setSettings(game);
 
-designer.draw_bg();
+//designer.draw_bg();
+designer.draw(game.bg_canvas, game.bg_ctx, game.designer.bg_array);
 
 requestAnimationFrame(loop);
 function loop() {

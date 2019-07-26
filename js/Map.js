@@ -45,14 +45,37 @@ class Map {
             if (array[i] == 0){
                 continue;
             }
-
             let x = (i % this.edge_size) * Tile.size;
             let y = Math.floor(i/ this.edge_size) * Tile.size;
             
             let tile = new Tile(x, y, i);
             this.addObjectDestigner(tile);
-            this.changeGrid(i, tile);
+            this.changeGrid(i, tile);            
+            
+            // Don't instantiate enemies on the tile where is the player
+            if (i != this.start_pos) {
+                this.addEnemyOnTile(tile);
+            }
         }
+    }
+
+    addEnemyOnTile(tile) {
+        let r = Math.random();
+        // add a enemy only if the hazard choose to, which allow the random density to look natural
+        if (r > tile.enemy_prct) {
+            return;
+        }
+        let enemy = new Enemy(this.game);        
+
+        // padding prevent the enemy to spawn on the edge of the map, which doesn't look good to the eyes
+        let x_min = tile.x + tile.padding;
+        let x_max = tile.x + tile.width - tile.padding - enemy.width;
+        let y_min = tile.y + tile.padding;
+        let y_max = tile.y + tile.height - tile.padding - enemy.height;
+        let x = Math.random() * (x_max - x_min) + x_min;
+        let y = Math.random() * (y_max - y_min) + y_min;
+        
+        enemy.setSettings(x, y, this.game);
     }
 
     changeGrid(id, tile) {

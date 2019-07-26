@@ -15,7 +15,6 @@ class Game {
             run: 2
         };
         this.current_speed = this.speed.walk;
-        this.speed_padding = 0; // Init in setSettings
 
         this.player = null;
         this.player_blocking_sizes = {
@@ -41,12 +40,12 @@ class Game {
 
         this.player.canvasPosition();
         
-        if (this.inputs.up && this.general.movementPossibleWithMap(this.player, this.current_speed + this.speed_padding, "up")) {
+        if (this.inputs.up && this.general.movementPossibleWithMap(this.player, this.current_speed + Tile.padding, "up")) {
             if (this.player.y < this.designer.vision_area.y + this.player_blocking_sizes.height) {
                 this.designer.movement(0, -this.current_speed);
             }
             this.player.movement(0, -this.current_speed);
-        } else if (this.inputs.down && this.general.movementPossibleWithMap(this.player, this.current_speed + this.speed_padding, "down")) {
+        } else if (this.inputs.down && this.general.movementPossibleWithMap(this.player, this.current_speed + Tile.padding, "down")) {
             if (this.player.y > this.designer.vision_area.y+this.designer.vision_area.height-this.player_blocking_sizes.height) {
                 this.designer.movement(0, this.current_speed);
             }
@@ -55,12 +54,12 @@ class Game {
             map_moving_y = false;
         }
 
-        if (this.inputs.left && this.general.movementPossibleWithMap(this.player, this.current_speed + this.speed_padding, "left")) {
+        if (this.inputs.left && this.general.movementPossibleWithMap(this.player, this.current_speed + Tile.padding, "left")) {
             if (this.player.x < this.designer.vision_area.x + this.player_blocking_sizes.width) {
                 this.designer.movement(-this.current_speed, 0);
             }
             this.player.movement(-this.current_speed, 0);
-        } else if (this.inputs.right && this.general.movementPossibleWithMap(this.player, this.current_speed + this.speed_padding, "right")) {
+        } else if (this.inputs.right && this.general.movementPossibleWithMap(this.player, this.current_speed + Tile.padding, "right")) {
             if (this.player.x > this.designer.vision_area.x+this.designer.vision_area.width-this.player_blocking_sizes.width) {
                 this.designer.movement(this.current_speed, 0);
             }
@@ -80,7 +79,6 @@ class Game {
         this.map = map;
         this.player = player;
         this.general = general;
-        this.speed_padding = player.width/10;
         
     }
 }
