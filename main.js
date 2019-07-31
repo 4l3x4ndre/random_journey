@@ -26,6 +26,7 @@ requestAnimationFrame(loop);
 function loop() {
 
     game.movement();
+    game.enemies_life();
     designer.draw(game.fg_canvas, game.fg_ctx, game.designer.fg_array);
 
     requestAnimationFrame(loop);

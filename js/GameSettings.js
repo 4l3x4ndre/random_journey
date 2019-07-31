@@ -23,6 +23,13 @@ class Game {
         }
     }
 
+    enemies_life() {
+        for (var i in enemies) {
+            const e = enemies[i];
+            e.behaviour();
+        }
+    }
+
     movement() {
         if (this.designer == null) {
             

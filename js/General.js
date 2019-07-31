@@ -2,6 +2,12 @@ class General {
     constructor() {
     }
 
+    distance(a, b) {
+        return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+    }
+
+
+
     mapTileUnderCoord(x, y) {
         // return the position of the tile under the object according to the map grid array
         return (Math.floor(y/Tile.size)) * this.map.edge_size + Math.floor(x/Tile.size);

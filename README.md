@@ -23,6 +23,15 @@ By pressing ZQSD, the player move around the map. He can't go outside the map.
 Enemies are randomly instantiate. Each tile got a spawing percentage (for the moment they all have the same).
 According to this percentage, the enemy will spawn on a random position inside of his tile.
 
+The enemies will have different behaviours according to their type.
+The first type is really simple. The enemy move to the player if he is too close. When the enemy is enough close, he jump to the player then go back to his initial position.
+
+Enemies got different colors:
+-grey: doing nothing
+-yellow: walk to the player
+-orange: charging the attack
+-red: attack
+
 ## General
 
 A script called General contains all the functions that many entities need, like collisions, distance, etc.
