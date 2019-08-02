@@ -16,7 +16,7 @@ Each tile of the map got a pagging value. This prevent moving objects to touch a
 
 ## Player
 
-By pressing ZQSD, the player move around the map. He can't go outside the map.
+By pressing ZQSD or WASD, the player move around the map. He can't go outside the map.
 
 ## Enemies
 

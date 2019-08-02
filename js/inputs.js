@@ -33,9 +33,9 @@ class InputManager {
 
     keyDown(e) {
         
-        if (e.keyCode == 90) {
+        if (e.keyCode == 90 || e.keyCode == 87) {
             this.up = true;
-        } else if (e.keyCode == 81) {
+        } else if (e.keyCode == 81 || e.keyCode == 65) {
             this.left = true;
         } else if (e.keyCode == 83) {
             this.down = true;
@@ -50,9 +50,9 @@ class InputManager {
     }
 
     keyUp(e) {
-        if (e.keyCode == 90) {
+        if (e.keyCode == 90 || e.keyCode == 87) {
             this.up = false;
-        } else if (e.keyCode == 81) {
+        } else if (e.keyCode == 81 || e.keyCode == 65) {
             this.left = false;
         } else if (e.keyCode == 83) {
             this.down = false;
