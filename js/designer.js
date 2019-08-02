@@ -157,6 +157,11 @@ class Designer {
     }
 
     addDrawable(array, obj) {
+        obj.designer_id = array.length;
         array.push(obj);
+    }
+
+    removeDrawable(array, id) {
+        array.splice(id, 1);
     }
 }

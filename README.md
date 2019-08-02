@@ -1,6 +1,6 @@
 # Random Journey
 
-Trying to make a simple rpg using Javascript and canvas.
+Trying to make a simple rpg using Javascript and canvas. The goal is to reach the blue trigger at the end of the path.
 
 ## Map
 
@@ -26,7 +26,7 @@ According to this percentage, the enemy will spawn on a random position inside o
 The enemies will have different behaviours according to their type.
 The first type is really simple. The enemy move to the player if he is too close. When the enemy is enough close, he jump to the player then go back to his initial position.
 
-Enemies got different colors: grey (doing nothing), yellow (walk to the player), orange (charging the attack), red (attack)
+Enemies got different colors: grey (doing nothing), yellow (walk to the player), orange (charging the attack), red (attack).
 
 ## General
 

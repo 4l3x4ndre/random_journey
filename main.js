@@ -18,6 +18,7 @@ map.setSettings(game);
 player.setSettings(game);
 designer.setSettings(game);
 general.setSettings(game);
+inputs.setSettings(game);
 
 //designer.draw_bg();
 designer.draw(game.bg_canvas, game.bg_ctx, game.designer.bg_array);

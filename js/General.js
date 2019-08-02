@@ -30,7 +30,7 @@ class General {
         let tile = this.map.grid[tile_id];
         let research_tile = this.tileOfId(tile_id-1);
 
-        if ((research_tile == null && obj.x - speed < tile.x) || obj.x - speed < 0) {
+        if ((tile != null && research_tile == null && obj.x - speed < tile.x) || obj.x - speed < 0) {
             // There is nothing to the left of the tile where is the object
             // (no tile or the obj reach the edge of map)
             return false;
@@ -40,7 +40,7 @@ class General {
         tile = this.map.grid[tile_id];
         research_tile = this.tileOfId(tile_id-1);
 
-        if ((research_tile == null && obj.x - speed < tile.x) || obj.x - speed < 0) {
+        if ((tile != null && research_tile == null && obj.x - speed < tile.x) || obj.x - speed < 0) {
             // There is nothing to the left of the tile where is the object
             // here it use the opposite edge to avoid glitch when the obj is between to tiles
             return false;
@@ -53,7 +53,7 @@ class General {
         let tile = this.map.grid[tile_id];
         let research_tile = this.tileOfId(tile_id+1);
 
-        if ((research_tile == null && obj.x+obj.width+speed > tile.x+Tile.size)
+        if ((tile != null && research_tile == null && obj.x+obj.width+speed > tile.x+Tile.size)
         || obj.x+obj.width+speed > this.map.edge_size*Tile.size) {
             return false;
         }
@@ -62,7 +62,7 @@ class General {
         tile = this.map.grid[tile_id];
         research_tile = this.tileOfId(tile_id+1);
 
-        if ((research_tile == null && obj.x+obj.width+speed > tile.x+Tile.size)
+        if ((tile != null && research_tile == null && obj.x+obj.width+speed > tile.x+Tile.size)
         || obj.x+obj.width+speed > this.map.edge_size*Tile.size) {
             return false;
         }
@@ -74,7 +74,7 @@ class General {
         let tile = this.map.grid[tile_id];
         let research_tile = this.tileOfId(tile_id-this.map.edge_size);
 
-        if ((research_tile == null && obj.y - speed < tile.y) || obj.y - speed < 0) {
+        if ((tile != null && research_tile == null && obj.y - speed < tile.y) || obj.y - speed < 0) {
             return false;
         }
 
@@ -82,7 +82,7 @@ class General {
         tile = this.map.grid[tile_id];
         research_tile = this.tileOfId(tile_id-this.map.edge_size);
 
-        if ((research_tile == null && obj.y - speed < tile.y) || obj.y - speed < 0) {
+        if ((tile != null && research_tile == null && obj.y - speed < tile.y) || obj.y - speed < 0) {
             return false;
         }        
         return true;
@@ -93,7 +93,7 @@ class General {
         let tile = this.map.grid[tile_id];
         let research_tile = this.tileOfId(tile_id+this.map.edge_size);
 
-        if ((research_tile == null && obj.y+obj.height+speed > tile.y + Tile.size)
+        if ((tile != null && research_tile == null && obj.y+obj.height+speed > tile.y + Tile.size)
         || obj.y + obj.height + speed > this.map.edge_size*Tile.size) {
             return false;
         }
@@ -102,7 +102,7 @@ class General {
         tile = this.map.grid[tile_id];
         research_tile = this.tileOfId(tile_id+this.map.edge_size);
 
-        if ((research_tile == null && obj.y+obj.height+speed > tile.y + Tile.size)
+        if ((tile != null && research_tile == null && obj.y+obj.height+speed > tile.y + Tile.size)
         || obj.y + obj.height + speed > this.map.edge_size*Tile.size) {
             return false;
         }

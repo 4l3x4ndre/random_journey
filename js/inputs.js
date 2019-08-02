@@ -6,6 +6,8 @@ class InputManager {
         this.left = false;
         this.run = false;
 
+        this.need_space_up = false;
+
         this.mouse = {
             x: 0,
             y: 0
@@ -19,11 +21,14 @@ class InputManager {
     }
 
     spacePressed() {
-        // Action
+        if (!this.need_space_up) {
+            // Action
+            this.need_space_up = true;
+        }
     }
 
     mapZoomPressed() {
-        game.designer.zoomingMap();
+        this.game.designer.zoomingMap();
     }
 
     keyDown(e) {
@@ -57,6 +62,12 @@ class InputManager {
             this.run = false;
         } else if (e.keyCode == 77) {
             this.mapZoomPressed();
+        } else if (e.keyCode == 32) {
+            this.need_space_up = false;
         }
+    }
+
+    setSettings(game) {
+        this.game = game;        
     }
 }

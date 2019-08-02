@@ -23,6 +23,7 @@ class Map {
     setLevel() {
         this.stop_generation = false;
         this.start_pos = (0.5 + (Math.random() * this.edge_size-1)) | 0;
+        this.last_pos = null;
         this.grid[this.start_pos] = 1;
 
         this.prev_pos = this.start_pos;
@@ -33,7 +34,11 @@ class Map {
             
             this.generation();
 
-        }        
+        }  
+        
+        // this is the last tile where the player can goes
+        this.last_pos = (this.prev_pos+1) + (this.line) * this.edge_size;
+              
     }
 
     addObjectDestigner(obj) {
@@ -52,9 +57,13 @@ class Map {
             this.addObjectDestigner(tile);
             this.changeGrid(i, tile);            
             
-            // Don't instantiate enemies on the tile where is the player
-            if (i != this.start_pos) {
+            // Don't instantiate enemies on the tile where is the player (the first walkable)
+            // and on the last tile (where the key is)
+            if (i != this.start_pos && i != this.last_pos-1) {
                 this.addEnemyOnTile(tile);
+            } else if (i == this.last_pos-1) {
+                // put the trigger in the middle of the last tile
+                this.trigger = new Trigger(x+Tile.size/2-Trigger.edge_size/2, y+Tile.size/2-Trigger.edge_size/2, this.game);
             }
         }
     }
