@@ -21,6 +21,19 @@ class Game {
             width: this.fg_canvas.width/7,
             height: this.fg_canvas.height/7,
         }
+
+        this.reload_page_timeout = null;
+    }
+
+    check_player_goal() {
+        if (this.general.collision(this.player, this.map.trigger)) {
+            if (this.reload_page_timeout == null) {
+                this.reload_page_timeout = setTimeout(() => {
+                    this.reload_page_timeout = null;
+                    document.location.reload();
+                }, 2000);
+            }
+        }
     }
 
     enemies_life() {

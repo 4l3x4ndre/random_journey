@@ -2,6 +2,15 @@ class General {
     constructor() {
     }
 
+    collision(a, b) {
+        if (((a.y >= b.y && a.y <= b.y + b.height) || (a.y + a.height >= b.y && a.y + a.height <= b.y + b.height)) && 
+        ((a.x >= b.x && a.x <= b.x + b.width) || (a.x + a.width >= b.x && a.x + a.width <= b.x + b.width))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     distance(a, b) {
         return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
     }
