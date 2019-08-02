@@ -25,12 +25,30 @@ class Game {
         this.reload_page_timeout = null;
     }
 
+    reload_game() {
+        this.general.setPosition(this.player, -10, -10);
+        enemies = {};
+        for (var i in this.designer.fg_array) {
+            delete this.designer.fg_array[i];
+        }
+        for (var i in this.designer.bg_array) {
+            delete this.designer.bg_array[i];
+        }
+        this.map.grid = [];
+        this.map.setLevel();
+        this.map.convertToTile(this.map.grid);
+        this.designer.draw(game.bg_canvas, game.bg_ctx, game.designer.bg_array);
+        this.player.setSettings(this);
+    }
+
     check_player_goal() {
         if (this.general.collision(this.player, this.map.trigger)) {
             if (this.reload_page_timeout == null) {
+                console.log("RELOADING...");
+                
                 this.reload_page_timeout = setTimeout(() => {
                     this.reload_page_timeout = null;
-                    document.location.reload();
+                    this.reload_game();
                 }, 2000);
             }
         }

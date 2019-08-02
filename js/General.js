@@ -2,6 +2,11 @@ class General {
     constructor() {
     }
 
+    setPosition(obj, x, y) {
+        obj.x = x;
+        obj.y = y;
+    }
+
     collision(a, b) {
         if (((a.y >= b.y && a.y <= b.y + b.height) || (a.y + a.height >= b.y && a.y + a.height <= b.y + b.height)) && 
         ((a.x >= b.x && a.x <= b.x + b.width) || (a.x + a.width >= b.x && a.x + a.width <= b.x + b.width))) {
