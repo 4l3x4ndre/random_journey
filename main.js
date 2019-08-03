@@ -25,10 +25,14 @@ designer.draw(game.bg_canvas, game.bg_ctx, game.designer.bg_array);
 
 requestAnimationFrame(loop);
 function loop() {
-
-    game.movement();
-    game.enemies_life();
-    game.check_player_goal();
+    if (!game.player.has_take_damage) {
+        if (!game.finish) {
+            game.movement();
+            game.enemies_life();
+        }
+        game.check_player_goal();
+    }
+    game.particles_movement();
     designer.draw(game.fg_canvas, game.fg_ctx, game.designer.fg_array);
 
     requestAnimationFrame(loop);

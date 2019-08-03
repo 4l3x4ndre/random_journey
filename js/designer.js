@@ -162,6 +162,6 @@ class Designer {
     }
 
     removeDrawable(array, id) {
-        array.splice(id, 1);
+        delete array[id];
     }
 }

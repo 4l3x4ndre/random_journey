@@ -23,6 +23,7 @@ class Game {
         }
 
         this.reload_page_timeout = null;
+        this.finish = false;
     }
 
     reload_game() {
@@ -34,6 +35,7 @@ class Game {
         for (var i in this.designer.bg_array) {
             delete this.designer.bg_array[i];
         }
+        this.finish = false;
         this.map.grid = [];
         this.map.setLevel();
         this.map.convertToTile(this.map.grid);
@@ -45,12 +47,22 @@ class Game {
         if (this.general.collision(this.player, this.map.trigger)) {
             if (this.reload_page_timeout == null) {
                 console.log("RELOADING...");
-                
+                this.finish = true;
+                for (var i=0; i<Particle.settings.density*2; i++) {
+                    new Particle(this.map.trigger.x, this.map.trigger.y, this.map.trigger.color, this);
+                }
                 this.reload_page_timeout = setTimeout(() => {
                     this.reload_page_timeout = null;
                     this.reload_game();
                 }, 2000);
             }
+        }
+    }
+
+    particles_movement() {
+        for (var i in particles) {
+            const p = particles[i];
+            p.move();
         }
     }
 

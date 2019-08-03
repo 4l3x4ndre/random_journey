@@ -20,7 +20,7 @@ class Enemy {
 
         this.attacking = false;
         this.can_attack = false;
-        this.attack_delay = 1;
+        this.attack_delay = 0.25;
         this.attack_timeout = null;
         this.jump_dst_traveled = 0;
         this.move_forward = false;
@@ -37,6 +37,11 @@ class Enemy {
     }
 
     behaviour() {
+
+        if (this.game.general.collision(this, this.game.player)) {
+            this.game.player.takeDamage();
+        }
+
         if (this.attacking) {
             if (this.jump_dst_traveled < this.attack_dst) {
                 this.jump_dst_traveled += 1;

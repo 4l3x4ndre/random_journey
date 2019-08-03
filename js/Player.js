@@ -6,10 +6,12 @@ class Player {
         this.height = Tile.size/5;     
         this.color = "lightgreen"; 
         this.tile_id = -1;  
+        this.has_take_damage = false;
     }
 
     setSettings(game) {
         this.game = game;
+        this.designer_id = this.game.designer.fg_array.length;
         this.game.designer.addDrawable(this.game.designer.fg_array, this);
 
         this.map = this.game.map;
@@ -25,6 +27,16 @@ class Player {
     canvasPosition() {
         this.canvas_x = this.x - this.game.designer.vision_area.x;
         this.canvas_y = this.y - this.game.designer.vision_area.y;
+    }
+    
+    takeDamage() {
+        if (!this.has_take_damage) {
+            this.has_take_damage = true;
+            for (var i = 0; i < Particle.settings.density; i++) {
+                new Particle(this.x, this.y, this.color, this.game);                
+            }
+            this.game.designer.removeDrawable(this.game.designer.fg_array, this.designer_id);
+        }
     }
 
 }
