@@ -18,12 +18,28 @@
                 top: 0%;
                 bottom: 0%;
             }
+
+            #world-p {
+                left:0%;
+                line-height: 200px;
+                margin-top: -100px;
+                position: absolute;
+                text-align: center;
+                top: 10%;
+                width: 100%;
+                color: red;
+                text-shadow: 3px 2px black;
+                font-size: 500%;
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+                transition: 0.5s;
+            }
         </style>
     </head>
     <body>
 
         <canvas id="bg-canvas" width="500px" height="500px"></canvas>
         <canvas id="fg-canvas" width="500px" height="500px"></canvas>
+        <p id="world-p">World </p>
 
         <script src="./js/inputs.js"></script>
         <script src="./js/GameSettings.js"></script>
@@ -35,6 +51,8 @@
         <script src="./js/Enemy.js"></script>
         <script src="./js/trigger.js"></script>
         <script src="./js/particles.js"></script>
+        <script src="./js/worlds.js"></script>
+        <script src="./js/Text.js"></script>
         <script src="./main.js"></script>
 
     </body>

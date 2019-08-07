@@ -7,6 +7,8 @@ class Player {
         this.color = "lightgreen"; 
         this.tile_id = -1;  
         this.has_take_damage = false;
+        this.life = 3;
+        this.respawn_delay = 1;
     }
 
     setSettings(game) {
@@ -36,7 +38,29 @@ class Player {
                 new Particle(this.x, this.y, this.color, this.game);                
             }
             this.game.designer.removeDrawable(this.game.designer.fg_array, this.designer_id);
+
+            // Set the player outside of the map to avoid enemies from chase him
+            this.x = -Tile.size * 2;
+            this.y = -Tile.size * 2;
+            
+            setTimeout(() => {
+                this.respawn();
+            }, this.respawn_delay * 1000);
         }
+    }
+
+    respawn() {
+        if (this.life > 1) {
+            this.designer_id = this.game.designer.fg_array.length;
+            this.game.designer.addDrawable(this.game.designer.fg_array, this);
+            this.x = this.map.start_pos * Tile.size + Tile.size/2;
+            this.y = Tile.size/2;
+            this.life --;
+            this.has_take_damage = false;
+        } else {
+            console.log("PLAYER DIED");
+        }
+
     }
 
 }

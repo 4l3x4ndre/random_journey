@@ -24,6 +24,30 @@ class Game {
 
         this.reload_page_timeout = null;
         this.finish = false;
+
+        this.world_id = 0;
+        this.level_id = 0;
+
+        this.text_state = "increase";
+        this.text_world = new Text(this, 1, "world-p", "World ", this.world_id+1, " - ", this.level_id+1);
+        this.change_text_opacity = true;
+        this.text_world.set_direct_opacity(0);
+
+    }
+
+    change_world_text() {
+        this.text_world = new Text(this, 1, "world-p", "World ", this.world_id+1, " - ", this.level_id+1);
+        this.text_world.set_inner_html();
+    }
+
+    change_world_opacity() {
+        if (this.change_text_opacity) {
+            if (this.text_state == "increase") {
+                this.text_world.set_opacity(1);
+            } else if (this.text_state == "decrease") {
+                this.text_world.set_opacity(0);
+            }
+        }
     }
 
     reload_game() {
@@ -35,7 +59,24 @@ class Game {
         for (var i in this.designer.bg_array) {
             delete this.designer.bg_array[i];
         }
-        this.finish = false;
+
+        this.level_id++;
+        if (this.level_id > 4) {
+            this.level_id = 0;
+            this.world_id++;
+            if (this.world_id+1 <= this.worlds.length) {
+                this.current_world = this.worlds[this.world_id];
+            } else {
+                console.log("FINISH!");
+                this.finish = true;
+                return;
+            }
+        }
+        if (!this.finish) {
+            this.change_world_text();
+            this.change_world_opacity();
+            this.change_text_opacity = true;
+        }
         this.map.grid = [];
         this.map.setLevel();
         this.map.convertToTile(this.map.grid);
@@ -47,7 +88,6 @@ class Game {
         if (this.general.collision(this.player, this.map.trigger)) {
             if (this.reload_page_timeout == null) {
                 console.log("RELOADING...");
-                this.finish = true;
                 for (var i=0; i<Particle.settings.density*2; i++) {
                     new Particle(this.map.trigger.x, this.map.trigger.y, this.map.trigger.color, this);
                 }
@@ -123,12 +163,14 @@ class Game {
         }
     }
 
-    setSettings(inputs, designer, map, player, general) {
+    setSettings(inputs, designer, map, player, general, worlds) {
         this.inputs = inputs;
         this.designer = designer;
         this.map = map;
         this.player = player;
         this.general = general;
-        
+        this.worlds = worlds;
+        this.current_world = this.worlds[this.world_id];
+        this.change_world_text();
     }
 }

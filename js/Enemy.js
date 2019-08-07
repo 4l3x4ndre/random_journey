@@ -5,15 +5,11 @@ class Enemy {
     constructor() {
         this.width = Enemy.size;
         this.height = Enemy.size;
-        this.sleep_color = "grey";
-        this.walk_color = "yellow";
-        this.load_attack_color = "orange";
-        this.attack_color = "red";
         this.color = this.sleep_color;
         this.type = "jump";
 
         this.awake_dst = Tile.size;
-        this.attack_dst = Tile.size/3;
+        this.attack_dst = Tile.size/2.25;
         this.walkable_speed = .75;
         this.attack_speed = 2;
         this.current_speed = this.walkable_speed;
@@ -47,7 +43,7 @@ class Enemy {
                 this.jump_dst_traveled += 1;
                 this.x += this.dx;
                 this.y += this.dy;
-            } else if (this.game.general.distance(this, this.old_pos)> 0) {
+            } else if (this.game.general.distance(this, this.old_pos) > this.width/10) {
                 this.setDirection(this.old_pos);
                 this.x += this.dx;
                 this.y += this.dy;
@@ -156,6 +152,12 @@ class Enemy {
         this.game = game;
         this.designer = game.designer;
         this.designer.addDrawable(this.designer.fg_array, this);
+
+        let colors = this.game.current_world.enemies_colors;
+        this.sleep_color = colors[0];
+        this.walk_color = colors[1];
+        this.load_attack_color = colors[2];
+        this.attack_color = colors[3];
     }
 
     static get size() {

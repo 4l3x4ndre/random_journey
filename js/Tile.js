@@ -1,16 +1,15 @@
 class Tile {
-    constructor(x, y, designer_id) {
+    constructor(x, y, designer_id, game) {
         this.x = x;
         this.y = y;
         this.width = Tile.size;
         this.height = Tile.size;
         this.padding = Tile.padding;
-        this.color = "black";
         this.designer_id = designer_id;
 
-        // This value need to be random between level,
-        // still need to decide how to do it and according to what.
-        this.enemy_prct = .2;
+        this.game = game;
+        this.color = this.game.current_world.tile_color;
+        this.enemy_prct = this.game.current_world.enemies_density;
     }
 
     static get size() {

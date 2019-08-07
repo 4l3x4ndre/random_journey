@@ -1,6 +1,6 @@
 # Random Journey
 
-Trying to make a simple rpg using Javascript and canvas. The goal is to reach the blue trigger at the end of the path without touching a ennemy.
+Trying to make a simple rpg using Javascript and canvas. The goal is to reach the blue trigger at the end of the path without touching a ennemy. The player will travel in different worlds.
 
 ## Map
 
