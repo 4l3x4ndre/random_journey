@@ -56,9 +56,11 @@ class Player {
             this.x = this.map.start_pos * Tile.size + Tile.size/2;
             this.y = Tile.size/2;
             this.life --;
+            this.game.change_life_text();
             this.has_take_damage = false;
         } else {
             console.log("PLAYER DIED");
+            this.game.player_death();
         }
 
     }

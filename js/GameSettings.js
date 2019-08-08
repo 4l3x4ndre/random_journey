@@ -33,6 +33,18 @@ class Game {
         this.change_text_opacity = true;
         this.text_world.set_direct_opacity(0);
 
+        this.text_life = new Text(this, 1, "life-p", "Life ", 0);
+        this.text_life.set_direct_opacity(1);
+    }
+
+    player_death() {
+        this.text_life = new Text(this, 1, "life-p", "Game Over", "");
+        this.text_life.set_inner_html(); 
+    }
+
+    change_life_text() {
+        this.text_life = new Text(this, 1, "life-p", "Life ", this.player.life);
+        this.text_life.set_inner_html();
     }
 
     change_world_text() {
@@ -80,8 +92,9 @@ class Game {
         this.map.grid = [];
         this.map.setLevel();
         this.map.convertToTile(this.map.grid);
-        this.designer.draw(game.bg_canvas, game.bg_ctx, game.designer.bg_array);
         this.player.setSettings(this);
+        this.designer.centerMapVision();
+        this.designer.draw(game.bg_canvas, game.bg_ctx, game.designer.bg_array);
     }
 
     check_player_goal() {
@@ -168,6 +181,8 @@ class Game {
         this.designer = designer;
         this.map = map;
         this.player = player;
+        this.text_life = new Text(this, 1, "life-p", "Life ", this.player.life);
+        this.text_life.set_inner_html();
         this.general = general;
         this.worlds = worlds;
         this.current_world = this.worlds[this.world_id];

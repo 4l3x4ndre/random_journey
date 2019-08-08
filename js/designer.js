@@ -19,6 +19,13 @@ class Designer {
         this.current_zoom = this.zoom.min;
     }
 
+    vision_reposition() {
+        if (this.current_zoom == this.zoom.min) {
+            this.centerMapVision();
+            this.current_zoom = this.zoom.max;
+        }
+    }
+
     setSettings(game) {
         this.game = game;
         this.map = game.map;
@@ -28,6 +35,7 @@ class Designer {
         this.zoom.max = this.map.edge_size * Tile.size;
         this.zoom_array = [this.zoom.min, this.zoom.normal, this.zoom.max];
         this.setMapZoom(this.current_zoom);
+        
     }    
 
     movement (amount_x, amount_y) {
@@ -62,7 +70,7 @@ class Designer {
         } else {
             this.centerMapVision(0, 0);
         }
-        this.draw_bg();
+        this.draw(this.game.bg_canvas, this.game.bg_ctx, this.bg_array);
     }
 
     centerMapVision(custom_x = null, custom_y = null) {

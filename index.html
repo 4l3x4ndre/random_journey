@@ -5,6 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
         <style>
+            html {
+                overflow: hidden;
+            }
             body {
                 background-color: dimgrey;
             }
@@ -19,19 +22,37 @@
                 bottom: 0%;
             }
 
-            #world-p {
-                left:0%;
+            .over_text {
                 line-height: 200px;
                 margin-top: -100px;
                 position: absolute;
                 text-align: center;
-                top: 10%;
                 width: 100%;
+                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            }
+
+            #world-p {
+                top: 40%;
+                margin-left: 400px;
+                font-size: 300%;
                 color: red;
                 text-shadow: 3px 2px black;
-                font-size: 500%;
-                font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
                 transition: 0.5s;
+            }
+
+            #life-p {
+                top: 50%;
+                margin-left: 400px;
+                font-size: 200%;
+                color: green;
+                text-shadow: 3px 2px black;
+            }
+
+            #title-p {
+                top: 5%;
+                font-size: 400%;
+                color: white;
+                text-shadow: 3px 2px black;
             }
         </style>
     </head>
@@ -39,7 +60,9 @@
 
         <canvas id="bg-canvas" width="500px" height="500px"></canvas>
         <canvas id="fg-canvas" width="500px" height="500px"></canvas>
-        <p id="world-p">World </p>
+        <p id="title-p" class="over_text">GAME</p>
+        <p id="world-p" class="over_text">World </p>
+        <p id="life-p" class="over_text">Life </p>
 
         <script src="./js/inputs.js"></script>
         <script src="./js/GameSettings.js"></script>
