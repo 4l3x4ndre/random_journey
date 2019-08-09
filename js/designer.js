@@ -22,7 +22,7 @@ class Designer {
     vision_reposition() {
         if (this.current_zoom == this.zoom.min) {
             this.centerMapVision();
-            this.current_zoom = this.zoom.max;
+            this.draw(this.game.bg_canvas, this.game.bg_ctx, this.bg_array);
         }
     }
 

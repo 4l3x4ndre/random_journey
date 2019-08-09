@@ -105,15 +105,33 @@ class Enemy {
 
     move_to(target) {
         this.color = this.walk_color;
+        let dist = {
+            x:0,
+            y:0
+        }
         if (this.x > target.x) {
-            this.move(-this.current_speed, 0);
-        } else if (this.x < target.x) {
-            this.move(this.current_speed, 0);
+            dist.x = this.x - target.x
+        } else if (target.x > this.x){
+            dist.x = target.x - this.x;
         }
         if (this.y > target.y) {
-            this.move(0, -this.current_speed);
-        } else if (this.y < target.y) {
-            this.move(0, this.current_speed);
+            dist.y = this.y - target.y
+        } else if (target.y > this.y){
+            dist.y = target.y - this.y;
+        }
+        if (dist.x > this.current_speed) {
+            if (this.x > target.x) {
+                this.move(-this.current_speed, 0);
+            } else if (this.x < target.x) {
+                this.move(this.current_speed, 0);
+            }
+        }
+        if (dist.y > this.current_speed) {
+            if (this.y > target.y) {
+                this.move(0, -this.current_speed);
+            } else if (this.y < target.y) {
+                this.move(0, this.current_speed);
+            }
         }
     }
 

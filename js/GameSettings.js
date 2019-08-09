@@ -93,7 +93,7 @@ class Game {
         this.map.setLevel();
         this.map.convertToTile(this.map.grid);
         this.player.setSettings(this);
-        this.designer.centerMapVision();
+        this.designer.vision_reposition();
         this.designer.draw(game.bg_canvas, game.bg_ctx, game.designer.bg_array);
     }
 
