@@ -39,7 +39,7 @@ class Game {
 
     player_death() {
         this.text_life = new Text(this, 1, "life-p", "Game Over", "");
-        this.text_life.set_inner_html(); 
+        this.text_life.set_inner_html();
     }
 
     change_life_text() {

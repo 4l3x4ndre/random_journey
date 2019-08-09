@@ -149,6 +149,8 @@ class Enemy {
     setSettings(x, y, game) {
         this.x = x;
         this.y = y;
+        this.start_x = x;
+        this.start_y = y;
         this.game = game;
         this.designer = game.designer;
         this.designer.addDrawable(this.designer.fg_array, this);
@@ -162,5 +164,13 @@ class Enemy {
 
     static get size() {
         return 20;
+    }
+
+    static reset_pos() {
+        for (var i in enemies) {
+            const e = enemies[i];
+            e.x = e.start_x;
+            e.y = e.start_y;
+        }
     }
 }

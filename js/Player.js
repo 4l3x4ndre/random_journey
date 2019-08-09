@@ -58,6 +58,7 @@ class Player {
             this.life --;
             this.game.change_life_text();
             this.has_take_damage = false;
+            Enemy.reset_pos();
         } else {
             console.log("PLAYER DIED");
             this.game.player_death();
